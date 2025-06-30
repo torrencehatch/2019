@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2019 ink - Fuzzy Text Animation</title>
+    <title>2019 ink</title>
     <style>
         body {
             margin: 0;
@@ -14,14 +14,34 @@
             align-items: center;
             min-height: 100vh;
             font-family: Arial, sans-serif;
+            overflow: hidden;
         }
         
         .container {
             text-align: center;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         canvas {
             display: block;
+            max-width: 100vw;
+            max-height: 100vh;
+        }
+        
+        @media (max-width: 768px) {
+            canvas {
+                transform: scale(0.8);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            canvas {
+                transform: scale(0.6);
+            }
         }
     </style>
 </head>
@@ -202,9 +222,13 @@
         window.addEventListener('load', () => {
             const canvas = document.getElementById('fuzzyCanvas');
             
+            // Responsive font size based on screen width
+            const isMobile = window.innerWidth <= 768;
+            const fontSize = isMobile ? Math.min(window.innerWidth * 0.15, 80) : 120;
+            
             new FuzzyText(canvas, {
                 text: '2019 ink',
-                fontSize: 120,
+                fontSize: fontSize,
                 fontWeight: 900,
                 color: '#fff',
                 baseIntensity: 0.2,
