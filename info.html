@@ -5,12 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Info - 2019 ink</title>
     <style>
-        body { background: #000; color: #fff; font-family: Arial, sans-serif; }
+        body { 
+            margin: 0;
+            padding: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        .map-container {
+            width: 80vw;
+            height: 80vh;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 25px;
+            border: 2px solid #fff;
+            background: rgba(0, 0, 0, 0.8);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        .back-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        @media (max-width: 768px) {
+            .map-container {
+                width: 95vw;
+                height: 85vh;
+            }
+            
+            .back-btn {
+                top: 20px;
+                left: 20px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Info</h1>
-    <p>About 2019 ink...</p>
-    <a href="index.html">← Back to Home</a>
+    <a href="index.html" class="back-btn">← Back</a>
+    
+    <div class="map-container">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d201880.0791044734!2d-122.31081555!3d37.8044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808f867b081766b1%3A0x94ea33f303e01be!2sOakland%2C%20CA!5e0!3m2!1sen!2sus!4v1000000000000!5m2!1sen!2sus"
+            allowfullscreen="" 
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
 </body>
 </html>
