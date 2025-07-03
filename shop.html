@@ -27,6 +27,8 @@
             margin-bottom: 60px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            display: flex;
+            justify-content: center;
         }
         
         .back-btn {
@@ -98,46 +100,19 @@
         }
         
         .product-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            display: none;
         }
         
         .product-price {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 25px;
+            display: none;
         }
         
         .product-description {
-            color: #ccc;
-            margin-bottom: 30px;
-            line-height: 1.5;
+            display: none;
         }
         
         .buy-btn {
-            display: inline-block;
-            background: transparent;
-            border: 2px solid #fff;
-            color: #fff;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        
-        .buy-btn:hover {
-            background: #fff;
-            color: #000;
-            transform: translateY(-2px);
+            display: none;
         }
         
         /* Shirt 1 - Red design */
@@ -235,11 +210,11 @@
     <a href="index.html" class="back-btn">← Back</a>
     
     <div class="container">
-        <h1>Shop</h1>
+        <canvas id="shopTitle"></canvas>
         
         <div class="products">
             <!-- Red Design Shirt -->
-            <div class="product">
+            <a href="#" class="product">
                 <div class="product-image">
                     <img src="red-shirt.png" alt="2019 ink Red Design Shirt">
                 </div>
@@ -248,11 +223,11 @@
                 <div class="product-description">
                     Bold red design on premium white cotton. Features the iconic 2019 ink logo with dynamic line artwork.
                 </div>
-                <a href="#" class="buy-btn">Buy Now</a>
-            </div>
+                <div class="buy-btn">Buy Now</div>
+            </a>
             
             <!-- Black Wire Design Shirt -->
-            <div class="product">
+            <a href="#" class="product">
                 <div class="product-image">
                     <img src="black-shirt.png" alt="BNKR Wire Design Shirt">
                 </div>
@@ -261,8 +236,8 @@
                 <div class="product-description">
                     Minimalist wire-frame typography on premium black cotton. Clean, architectural design aesthetic.
                 </div>
-                <a href="#" class="buy-btn">Buy Now</a>
-            </div>
+                <div class="buy-btn">Buy Now</div>
+            </a>
         </div>
     </div>
 </body>
