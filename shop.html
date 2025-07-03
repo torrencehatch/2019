@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Shop - 2019 ink</title>
     <style>
+        html {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
         body { 
             margin: 0;
             padding: 0;
@@ -12,6 +20,10 @@
             color: #fff;
             font-family: Arial, sans-serif;
             line-height: 1.6;
+            min-height: 100vh;
+            height: 100%;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
         
         .container {
