@@ -11,25 +11,33 @@
             background: #000;
             height: 100%;
             overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
         }
         
         body { 
             margin: 0;
             padding: 0;
+            padding-top: env(safe-area-inset-top);
             background: #000;
             color: #fff;
             font-family: Arial, sans-serif;
             line-height: 1.6;
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             height: 100%;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transform: translateZ(0);
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px;
+            padding-top: calc(40px + env(safe-area-inset-top));
+            box-sizing: border-box;
         }
         
         h1 {
@@ -45,7 +53,7 @@
         
         .back-btn {
             position: fixed;
-            top: 30px;
+            top: calc(30px + env(safe-area-inset-top));
             left: 30px;
             color: #fff;
             text-decoration: none;
@@ -58,6 +66,7 @@
             transition: all 0.3s ease;
             border-radius: 5px;
             z-index: 100;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .back-btn:hover {
@@ -201,7 +210,7 @@
             }
             
             .back-btn {
-                top: 20px;
+                top: calc(20px + env(safe-area-inset-top));
                 left: 20px;
                 padding: 12px 20px;
                 font-size: 14px;

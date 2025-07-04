@@ -2,18 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>Info - 2019 ink</title>
     <style>
+        html {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        
         body { 
             margin: 0;
             padding: 0;
+            padding-top: env(safe-area-inset-top);
             background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             font-family: Arial, sans-serif;
+            -webkit-overflow-scrolling: touch;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transform: translateZ(0);
         }
         
         .map-container {
@@ -34,7 +48,7 @@
         
         .back-btn {
             position: fixed;
-            top: 30px;
+            top: calc(30px + env(safe-area-inset-top));
             left: 30px;
             color: #fff;
             text-decoration: none;
@@ -46,6 +60,7 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             border-radius: 5px;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .back-btn:hover {
@@ -60,7 +75,7 @@
             }
             
             .back-btn {
-                top: 20px;
+                top: calc(20px + env(safe-area-inset-top));
                 left: 20px;
                 padding: 12px 20px;
                 font-size: 14px;
