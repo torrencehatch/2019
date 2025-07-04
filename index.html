@@ -24,42 +24,35 @@
         
         body {
             background: #000 !important;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh !important;
+            display: block;
+            height: auto;
             width: 100vw !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            bottom: 0 !important;
+            position: relative;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             margin: 0 !important;
             padding: 0 !important;
             font-family: Arial, sans-serif;
-            overflow: hidden !important;
+            overflow-y: auto;
+            overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             transform: translateZ(0);
         }
         
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50px;
-            left: -50px;
-            right: -50px;
-            bottom: -50px;
+        .scroll-spacer {
+            height: 1px;
+            width: 100%;
             background: #000;
-            z-index: -1;
         }
         
         .container {
             text-align: center;
             width: 100vw;
             height: 100vh;
-            height: -webkit-fill-available;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -160,6 +153,7 @@
     </style>
 </head>
 <body>
+    <div class="scroll-spacer"></div>
     <div class="container">
         <canvas id="fuzzyCanvas"></canvas>
         <div class="buttons">
@@ -171,6 +165,7 @@
             </a>
         </div>
     </div>
+    <div class="scroll-spacer"></div>
 
     <script>
         // FuzzyText implementation
