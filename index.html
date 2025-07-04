@@ -114,11 +114,13 @@
             }
             
             .buttons {
-                gap: 20px;
+                gap: 40px;
+                flex-direction: column;
+                align-items: center;
             }
             
             .container {
-                gap: 60px;
+                gap: 80px;
             }
             
             .btn canvas {
@@ -129,15 +131,17 @@
         
         @media (max-width: 480px) {
             canvas {
-                transform: scale(0.7) translateZ(0);
+                transform: scale(0.8) translateZ(0);
             }
             
             .buttons {
-                gap: 15px;
+                gap: 50px;
+                flex-direction: column;
+                align-items: center;
             }
             
             .container {
-                gap: 50px;
+                gap: 70px;
             }
             
             .btn canvas {
@@ -348,7 +352,7 @@
             
             // Responsive font size based on screen width
             const isMobile = window.innerWidth <= 768;
-            const fontSize = isMobile ? Math.min(window.innerWidth * 0.15, 80) : 120;
+            const fontSize = isMobile ? Math.min(window.innerWidth * 0.2, 100) : 120;
             
             // Main title
             new FuzzyText(canvas, {
