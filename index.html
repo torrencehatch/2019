@@ -10,6 +10,7 @@
             padding: 0;
             background: #000;
             height: 100%;
+            height: -webkit-fill-available;
             overflow: hidden;
             -webkit-text-size-adjust: 100%;
         }
@@ -17,13 +18,16 @@
         body {
             margin: 0;
             padding: 0;
-            padding-top: env(safe-area-inset-top);
             background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
+            height: 100vh;
+            height: -webkit-fill-available;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
             font-family: Arial, sans-serif;
             overflow: hidden;
             -webkit-overflow-scrolling: touch;
@@ -34,7 +38,7 @@
         
         .container {
             text-align: center;
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             height: -webkit-fill-available;
             display: flex;
@@ -44,8 +48,8 @@
             gap: 80px;
             will-change: transform;
             transform: translateZ(0);
-            padding-top: env(safe-area-inset-top);
-            box-sizing: border-box;
+            position: relative;
+            background: #000;
         }
         
         canvas {
