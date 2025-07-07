@@ -8,6 +8,16 @@
     <meta name="theme-color" content="#000000">
     <title>2019 ink</title>
     <style>
+        /* Custom Font Definition */
+        @font-face {
+            font-family: 'Helvetica';
+            src: url('fonts/helvetica-bold.woff2') format('woff2'),
+                 url('fonts/helvetica-bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -216,7 +226,7 @@
                 // Default options
                 this.text = options.text || '2019 ink';
                 this.fontSize = options.fontSize || 120;
-                this.fontWeight = options.fontWeight || 900;
+                this.fontWeight = options.fontWeight || 'bold';
                 this.fontFamily = options.fontFamily || 'Arial, sans-serif';
                 this.color = options.color || '#fff';
                 this.enableHover = options.enableHover !== false;
@@ -429,12 +439,12 @@
             const isMobile = window.innerWidth <= 768;
             const fontSize = isMobile ? Math.min(window.innerWidth * 0.25, 120) : 120;
             
-            // Main title with bold Arial font
+            // Main title with Helvetica font
             new FuzzyText(canvas, {
                 text: '2019 ink',
                 fontSize: fontSize,
-                fontWeight: 900, // Bold font weight
-                fontFamily: 'Arial, sans-serif', // Back to Arial
+                fontWeight: 'bold', // Use bold weight for Helvetica
+                fontFamily: 'Helvetica, Arial, sans-serif', // Helvetica with fallbacks
                 color: '#fff',
                 baseIntensity: 0.2,
                 hoverIntensity: 0.5,
@@ -450,8 +460,8 @@
                 new FuzzyText(canvas, {
                     text: text,
                     fontSize: buttonFontSize,
-                    fontWeight: 600,
-                    fontFamily: 'Arial, sans-serif', // Keeping buttons clean and readable
+                    fontWeight: 'bold',
+                    fontFamily: 'Helvetica, Arial, sans-serif', // Helvetica for buttons too
                     color: '#fff',
                     baseIntensity: 0.15,
                     hoverIntensity: 0.4,
