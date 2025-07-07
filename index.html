@@ -8,16 +8,6 @@
     <meta name="theme-color" content="#000000">
     <title>2019 ink</title>
     <style>
-        /* Custom Font Definition - Correct path for fonts folder */
-        @font-face {
-            font-family: 'Old London';
-            src: url('fonts/old-london-webfont.woff2') format('woff2'),
-                 url('fonts/old-london-webfont.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -226,7 +216,7 @@
                 // Default options
                 this.text = options.text || '2019 ink';
                 this.fontSize = options.fontSize || 120;
-                this.fontWeight = options.fontWeight || 'normal';
+                this.fontWeight = options.fontWeight || 900;
                 this.fontFamily = options.fontFamily || 'Arial, sans-serif';
                 this.color = options.color || '#fff';
                 this.enableHover = options.enableHover !== false;
@@ -439,12 +429,12 @@
             const isMobile = window.innerWidth <= 768;
             const fontSize = isMobile ? Math.min(window.innerWidth * 0.25, 120) : 120;
             
-            // Main title with Old London font
+            // Main title with bold Arial font
             new FuzzyText(canvas, {
                 text: '2019 ink',
                 fontSize: fontSize,
-                fontWeight: 'normal', // Old London looks best at normal weight
-                fontFamily: 'Old London, serif', // Your custom font with fallback
+                fontWeight: 900, // Bold font weight
+                fontFamily: 'Arial, sans-serif', // Back to Arial
                 color: '#fff',
                 baseIntensity: 0.2,
                 hoverIntensity: 0.5,
