@@ -8,6 +8,16 @@
     <meta name="theme-color" content="#000000">
     <title>2019 ink</title>
     <style>
+        /* Custom Font Definition */
+        @font-face {
+            font-family: 'Old London';
+            src: url('old-london-webfont.woff2') format('woff2'),
+                 url('old-london-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -216,7 +226,7 @@
                 // Default options
                 this.text = options.text || '2019 ink';
                 this.fontSize = options.fontSize || 120;
-                this.fontWeight = options.fontWeight || 900;
+                this.fontWeight = options.fontWeight || 'normal';
                 this.fontFamily = options.fontFamily || 'Arial, sans-serif';
                 this.color = options.color || '#fff';
                 this.enableHover = options.enableHover !== false;
@@ -429,18 +439,19 @@
             const isMobile = window.innerWidth <= 768;
             const fontSize = isMobile ? Math.min(window.innerWidth * 0.25, 120) : 120;
             
-            // Main title
+            // Main title with Old London font
             new FuzzyText(canvas, {
                 text: '2019 ink',
                 fontSize: fontSize,
-                fontWeight: 900,
+                fontWeight: 'normal', // Old London looks best at normal weight
+                fontFamily: 'Old London, serif', // Your custom font with fallback
                 color: '#fff',
                 baseIntensity: 0.2,
                 hoverIntensity: 0.5,
                 enableHover: true
             });
             
-            // Create fuzzy buttons
+            // Create fuzzy buttons (keeping original font for contrast)
             const buttonCanvases = document.querySelectorAll('.btn-canvas');
             buttonCanvases.forEach(canvas => {
                 const text = canvas.getAttribute('data-text');
@@ -450,6 +461,7 @@
                     text: text,
                     fontSize: buttonFontSize,
                     fontWeight: 600,
+                    fontFamily: 'Arial, sans-serif', // Keeping buttons clean and readable
                     color: '#fff',
                     baseIntensity: 0.15,
                     hoverIntensity: 0.4,
