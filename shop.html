@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Shop - 2019 ink</title>
     <style>
+        /* Custom Font Definition */
+        @font-face {
+            font-family: 'Helvetica';
+            src: url('fonts/helvetica-bold.woff2') format('woff2'),
+                 url('fonts/helvetica-bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         html {
             margin: 0;
             padding: 0;
@@ -20,7 +30,7 @@
             padding-top: env(safe-area-inset-top);
             background: #000;
             color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica', Arial, sans-serif;
             line-height: 1.6;
             min-height: 100vh;
             min-height: -webkit-fill-available;
@@ -271,9 +281,9 @@
                     <div class="black-shirt-design">BNKR</div>
                 </div>
                 <div class="product-info">
-                    <span class="product-price">$30</span>
-                    <span class="limited-text">Limited to 10 pcs</span>
-                    <span class="material-text">100% Cotton</span>
+                    <span class="info-item">[$30]</span>
+                    <span class="info-item">[Limited to 10 pcs]</span>
+                    <span class="info-item">[100% Cotton]</span>
                 </div>
                 <div class="size-options">
                     <label for="black-size">Size:</label>
@@ -284,8 +294,8 @@
                         <option value="xl">X-Large</option>
                     </select>
                 </div>
-                <!-- Replace this URL with your actual Stripe Payment Link -->
-                <a href="https://buy.stripe.com/aFa8wPahs4WXgSt8wV4c800" class="buy-btn">
+                <!-- BNKR TEE Payment Link -->
+                <a href="https://buy.stripe.com/aFa7sLblw0GH7hT5kJ4c801" class="buy-btn">
                     Buy Now
                 </a>
             </div>
@@ -296,9 +306,9 @@
                     <div class="red-shirt-design">2019 ink</div>
                 </div>
                 <div class="product-info">
-                    <span class="product-price">$30</span>
-                    <span class="limited-text">Limited to 10 pcs</span>
-                    <span class="material-text">100% Cotton</span>
+                    <span class="info-item">[$30]</span>
+                    <span class="info-item">[Limited to 10 pcs]</span>
+                    <span class="info-item">[100% Cotton]</span>
                 </div>
                 <div class="size-options">
                     <label for="red-size">Size:</label>
@@ -309,8 +319,8 @@
                         <option value="xl">X-Large</option>
                     </select>
                 </div>
-                <!-- Replace this URL with your actual Stripe Payment Link -->
-                <a href="https://buy.stripe.com/test_your_payment_link_here_2" class="buy-btn">
+                <!-- 2019 SHIRT Payment Link -->
+                <a href="https://buy.stripe.com/aFa8wPahs4WXgSt8wV4c800" class="buy-btn">
                     Buy Now
                 </a>
             </div>
