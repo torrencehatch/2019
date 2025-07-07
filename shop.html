@@ -40,17 +40,6 @@
             box-sizing: border-box;
         }
         
-        h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 60px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: flex;
-            justify-content: center;
-        }
-        
         .back-btn {
             position: fixed;
             top: calc(30px + env(safe-area-inset-top));
@@ -58,20 +47,23 @@
             color: #fff;
             text-decoration: none;
             padding: 15px 25px;
-            border: 2px solid #fff;
-            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             text-transform: uppercase;
             font-weight: 600;
             letter-spacing: 1px;
             transition: all 0.3s ease;
-            border-radius: 5px;
+            border-radius: 8px;
             z-index: 100;
             -webkit-tap-highlight-color: transparent;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         
         .back-btn:hover {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.95);
             color: #000;
+            transform: translateY(-2px);
         }
         
         .products {
@@ -82,18 +74,22 @@
         }
         
         .product {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 30px;
             text-align: center;
             transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         
         .product:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
         }
         
         .product-image {
@@ -107,6 +103,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
         
         .product-image img {
@@ -121,86 +118,119 @@
         }
         
         .product-title {
-            display: none;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .product-price {
-            display: none;
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 20px;
         }
         
         .product-description {
-            display: none;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.5;
         }
         
         .buy-btn {
-            display: none;
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 10px;
         }
         
-        /* Shirt 1 - Red design */
-        .red-shirt {
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-            position: relative;
-            overflow: hidden;
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
         }
         
-        .red-design {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 48px;
-            font-weight: 900;
-            color: #d32f2f;
-            text-transform: lowercase;
-            letter-spacing: -2px;
+        .limited-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            font-style: italic;
+            letter-spacing: 0.5px;
         }
         
-        .red-design::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: 
-                linear-gradient(45deg, transparent 40%, #d32f2f 41%, #d32f2f 42%, transparent 43%),
-                linear-gradient(-45deg, transparent 40%, #d32f2f 41%, #d32f2f 42%, transparent 43%),
-                linear-gradient(135deg, transparent 40%, #d32f2f 41%, #d32f2f 42%, transparent 43%),
-                linear-gradient(-135deg, transparent 40%, #d32f2f 41%, #d32f2f 42%, transparent 43%);
-            opacity: 0.3;
-            z-index: -1;
-        }
-        
-        /* Shirt 2 - Wire text design */
-        .black-shirt {
-            background: #1a1a1a;
-            position: relative;
-        }
-        
-        .wire-design {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            font-size: 36px;
-            font-weight: 300;
-            letter-spacing: 4px;
+        .material-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
+            font-weight: 500;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
         }
         
-        .wire-design::after {
-            content: '';
-            position: absolute;
-            top: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 40px;
-            background: 
-                linear-gradient(45deg, transparent 35%, #fff 36%, #fff 38%, transparent 39%),
-                linear-gradient(-45deg, transparent 35%, #fff 36%, #fff 38%, transparent 39%),
-                linear-gradient(135deg, transparent 35%, #fff 36%, #fff 38%, transparent 39%);
+        .size-options {
+            margin: 20px 0;
+        }
+        
+        .size-options label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .size-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 200px;
+        }
+        
+        .payment-icons {
+            margin-top: 15px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Mock shirt designs */
+        .black-shirt-design {
+            background: #1a1a1a;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .red-shirt-design {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d32f2f;
+            font-size: 28px;
+            font-weight: 900;
         }
         
         @media (max-width: 768px) {
@@ -216,13 +246,16 @@
                 font-size: 14px;
             }
             
-            h1 {
-                font-size: 2rem;
-                margin-bottom: 40px;
+            .product {
+                padding: 25px 20px;
             }
             
-            .product {
-                padding: 20px;
+            .product-title {
+                font-size: 20px;
+            }
+            
+            .product-price {
+                font-size: 24px;
             }
         }
     </style>
@@ -231,34 +264,56 @@
     <a href="index.html" class="back-btn">← Back</a>
     
     <div class="container">
-        <canvas id="shopTitle"></canvas>
-        
         <div class="products">
-            <!-- Black Wire Design Shirt - Now First -->
-            <a href="#" class="product">
+            <!-- Black Wire Design Shirt -->
+            <div class="product">
                 <div class="product-image">
-                    <img src="black-shirt.png" alt="BNKR Wire Design Shirt">
+                    <div class="black-shirt-design">BNKR</div>
                 </div>
-                <div class="product-title">BNKR Wire Tee</div>
-                <div class="product-price">$35</div>
-                <div class="product-description">
-                    Minimalist wire-frame typography on premium black cotton. Clean, architectural design aesthetic.
+                <div class="product-info">
+                    <span class="product-price">$30</span>
+                    <span class="limited-text">Limited to 10 pcs</span>
+                    <span class="material-text">100% Cotton</span>
                 </div>
-                <div class="buy-btn">Buy Now</div>
-            </a>
+                <div class="size-options">
+                    <label for="black-size">Size:</label>
+                    <select id="black-size" class="size-select">
+                        <option value="s">Small</option>
+                        <option value="m" selected>Medium</option>
+                        <option value="l">Large</option>
+                        <option value="xl">X-Large</option>
+                    </select>
+                </div>
+                <!-- Replace this URL with your actual Stripe Payment Link -->
+                <a href="https://buy.stripe.com/aFa8wPahs4WXgSt8wV4c800" class="buy-btn">
+                    Buy Now
+                </a>
+            </div>
             
-            <!-- Red Design Shirt - Now Second -->
-            <a href="#" class="product">
+            <!-- Red Design Shirt -->
+            <div class="product">
                 <div class="product-image">
-                    <img src="red-shirt.png" alt="2019 ink Red Design Shirt">
+                    <div class="red-shirt-design">2019 ink</div>
                 </div>
-                <div class="product-title">2019 ink Red Tee</div>
-                <div class="product-price">$35</div>
-                <div class="product-description">
-                    Bold red design on premium white cotton. Features the iconic 2019 ink logo with dynamic line artwork.
+                <div class="product-info">
+                    <span class="product-price">$30</span>
+                    <span class="limited-text">Limited to 10 pcs</span>
+                    <span class="material-text">100% Cotton</span>
                 </div>
-                <div class="buy-btn">Buy Now</div>
-            </a>
+                <div class="size-options">
+                    <label for="red-size">Size:</label>
+                    <select id="red-size" class="size-select">
+                        <option value="s">Small</option>
+                        <option value="m" selected>Medium</option>
+                        <option value="l">Large</option>
+                        <option value="xl">X-Large</option>
+                    </select>
+                </div>
+                <!-- Replace this URL with your actual Stripe Payment Link -->
+                <a href="https://buy.stripe.com/test_your_payment_link_here_2" class="buy-btn">
+                    Buy Now
+                </a>
+            </div>
         </div>
     </div>
 </body>
