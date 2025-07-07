@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>Info - 2019 ink</title>
     <style>
+        /* Custom Font Definition */
+        @font-face {
+            font-family: 'Old London';
+            src: url('fonts/old-london-webfont.woff2') format('woff2'),
+                 url('fonts/old-london-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         html {
             margin: 0;
             padding: 0;
@@ -41,10 +51,12 @@
         
         .text-content {
             color: #fff;
-            font-size: 18px;
-            line-height: 1.6;
-            font-weight: 400;
-            letter-spacing: 0.5px;
+            font-size: 20px;
+            line-height: 1.8;
+            font-weight: normal;
+            letter-spacing: 1px;
+            font-family: 'Old London', serif;
+            text-transform: lowercase;
         }
         
         .map-container {
@@ -93,8 +105,8 @@
             }
             
             .text-content {
-                font-size: 16px;
-                line-height: 1.5;
+                font-size: 18px;
+                line-height: 1.7;
             }
             
             .map-container {
@@ -113,8 +125,8 @@
         
         @media (max-width: 480px) {
             .text-content {
-                font-size: 14px;
-                line-height: 1.4;
+                font-size: 16px;
+                line-height: 1.6;
             }
         }
     </style>
