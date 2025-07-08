@@ -211,8 +211,8 @@
     <div class="scroll-spacer"></div>
 
     <script>
-        // FuzzyText implementation
-        class FuzzyText {
+        // FuzzyImage implementation for PNG logos
+        class FuzzyImage {
             constructor(canvas, options = {}) {
                 this.canvas = canvas;
                 this.ctx = canvas.getContext('2d');
@@ -224,14 +224,213 @@
                 }
                 
                 // Default options
-                this.text = options.text || '2019 ink';
-                this.fontSize = options.fontSize || 120;
-                this.fontWeight = options.fontWeight || 'bold';
-                this.fontFamily = options.fontFamily || 'Arial, sans-serif';
-                this.color = options.color || '#fff';
+                this.imageSrc = options.imageSrc || '2019ink-logo.png';
                 this.enableHover = options.enableHover !== false;
                 this.baseIntensity = options.baseIntensity || 0.2;
                 this.hoverIntensity = options.hoverIntensity || 0.5;
+                this.scale = options.scale || 1;
+                
+                this.isHovering = false;
+                this.animationFrameId = null;
+                this.fuzzRange = 30;
+                this.isVisible = true;
+                this.imageLoaded = false;
+                
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    // Load the image
+                    this.image = new Image();
+                    this.image.onload = () => {
+                        this.imageLoaded = true;
+                        this.setupCanvas();
+                        this.setupEventListeners();
+                        this.setupVisibilityHandling();
+                        this.startAnimation();
+                    };
+                    this.image.onerror = () => {
+                        console.error('Failed to load image:', this.imageSrc);
+                    };
+                    this.image.src = this.imageSrc;
+                } catch (error) {
+                    console.error('FuzzyImage initialization failed:', error);
+                }
+            }
+            
+            setupCanvas() {
+                if (!this.imageLoaded) return;
+                
+                // Calculate scaled dimensions
+                const scaledWidth = this.image.width * this.scale;
+                const scaledHeight = this.image.height * this.scale;
+                
+                // Set canvas size with margins
+                const horizontalMargin = 50;
+                const verticalMargin = 20;
+                this.canvas.width = scaledWidth + horizontalMargin * 2;
+                this.canvas.height = scaledHeight + verticalMargin * 2;
+                
+                // Create offscreen canvas for clean image rendering
+                this.offscreen = document.createElement('canvas');
+                this.offCtx = this.offscreen.getContext('2d');
+                this.offscreen.width = scaledWidth;
+                this.offscreen.height = scaledHeight;
+                
+                // Draw the image to offscreen canvas
+                this.offCtx.fillStyle = '#ffffff'; // White color for the image
+                this.offCtx.drawImage(this.image, 0, 0, scaledWidth, scaledHeight);
+                
+                // Set up interactive area
+                this.interactiveLeft = horizontalMargin;
+                this.interactiveTop = verticalMargin;
+                this.interactiveRight = horizontalMargin + scaledWidth;
+                this.interactiveBottom = verticalMargin + scaledHeight;
+                
+                this.offscreenWidth = scaledWidth;
+                this.offscreenHeight = scaledHeight;
+                this.horizontalMargin = horizontalMargin;
+                this.verticalMargin = verticalMargin;
+            }
+            
+            setupEventListeners() {
+                if (!this.enableHover) return;
+                
+                const handleMouseMove = (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    this.isHovering = this.isInsideImageArea(x, y);
+                };
+                
+                const handleMouseLeave = () => {
+                    this.isHovering = false;
+                };
+                
+                const handleTouchMove = (e) => {
+                    e.preventDefault();
+                    const rect = this.canvas.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    const x = touch.clientX - rect.left;
+                    const y = touch.clientY - rect.top;
+                    this.isHovering = this.isInsideImageArea(x, y);
+                };
+                
+                const handleTouchEnd = () => {
+                    this.isHovering = false;
+                };
+                
+                this.canvas.addEventListener('mousemove', handleMouseMove);
+                this.canvas.addEventListener('mouseleave', handleMouseLeave);
+                this.canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+                this.canvas.addEventListener('touchend', handleTouchEnd);
+                
+                // Store cleanup functions
+                this.cleanup = () => {
+                    this.canvas.removeEventListener('mousemove', handleMouseMove);
+                    this.canvas.removeEventListener('mouseleave', handleMouseLeave);
+                    this.canvas.removeEventListener('touchmove', handleTouchMove);
+                    this.canvas.removeEventListener('touchend', handleTouchEnd);
+                };
+            }
+            
+            setupVisibilityHandling() {
+                const handleVisibilityChange = () => {
+                    if (document.hidden) {
+                        this.isVisible = false;
+                        if (this.animationFrameId) {
+                            cancelAnimationFrame(this.animationFrameId);
+                            this.animationFrameId = null;
+                        }
+                    } else {
+                        this.isVisible = true;
+                        if (!this.animationFrameId && this.imageLoaded) {
+                            this.startAnimation();
+                        }
+                    }
+                };
+                
+                document.addEventListener('visibilitychange', handleVisibilityChange);
+                
+                // Add to cleanup
+                const originalCleanup = this.cleanup || (() => {});
+                this.cleanup = () => {
+                    originalCleanup();
+                    document.removeEventListener('visibilitychange', handleVisibilityChange);
+                };
+            }
+            
+            isInsideImageArea(x, y) {
+                return (
+                    x >= this.interactiveLeft &&
+                    x <= this.interactiveRight &&
+                    y >= this.interactiveTop &&
+                    y <= this.interactiveBottom
+                );
+            }
+            
+            startAnimation() {
+                if (!this.isVisible || !this.imageLoaded) return;
+                
+                const animate = () => {
+                    if (!this.isVisible || !this.imageLoaded) return;
+                    
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    const intensity = this.isHovering ? this.hoverIntensity : this.baseIntensity;
+                    
+                    // Apply fuzzy effect line by line
+                    for (let j = 0; j < this.offscreenHeight; j++) {
+                        const dx = Math.floor(intensity * (Math.random() - 0.5) * this.fuzzRange);
+                        this.ctx.drawImage(
+                            this.offscreen,
+                            0,
+                            j,
+                            this.offscreenWidth,
+                            1,
+                            this.horizontalMargin + dx,
+                            this.verticalMargin + j,
+                            this.offscreenWidth,
+                            1
+                        );
+                    }
+                    
+                    this.animationFrameId = requestAnimationFrame(animate);
+                };
+                
+                animate();
+            }
+            
+            destroy() {
+                if (this.animationFrameId) {
+                    cancelAnimationFrame(this.animationFrameId);
+                }
+                if (this.cleanup) {
+                    this.cleanup();
+                }
+            }
+        }
+        
+        // FuzzyText implementation for buttons (unchanged)
+        class FuzzyText {
+            constructor(canvas, options = {}) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                
+                if (!this.ctx) {
+                    console.error('Canvas context not available');
+                    return;
+                }
+                
+                this.text = options.text || 'TEXT';
+                this.fontSize = options.fontSize || 60;
+                this.fontWeight = options.fontWeight || 'bold';
+                this.fontFamily = options.fontFamily || 'Helvetica, Arial, sans-serif';
+                this.color = options.color || '#fff';
+                this.enableHover = options.enableHover !== false;
+                this.baseIntensity = options.baseIntensity || 0.15;
+                this.hoverIntensity = options.hoverIntensity || 0.4;
                 
                 this.isHovering = false;
                 this.animationFrameId = null;
@@ -247,7 +446,6 @@
                         await document.fonts.ready;
                     }
                     
-                    // Create offscreen canvas for clean text rendering
                     this.offscreen = document.createElement('canvas');
                     this.offCtx = this.offscreen.getContext('2d');
                     
@@ -286,7 +484,6 @@
                     this.canvas.height = tightHeight + verticalMargin * 2;
                     this.ctx.translate(horizontalMargin, verticalMargin);
                     
-                    // Set up interactive area
                     this.interactiveLeft = horizontalMargin + xOffset;
                     this.interactiveTop = verticalMargin;
                     this.interactiveRight = this.interactiveLeft + textBoundingWidth;
@@ -335,7 +532,6 @@
                 this.canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
                 this.canvas.addEventListener('touchend', handleTouchEnd);
                 
-                // Store cleanup functions
                 this.cleanup = () => {
                     this.canvas.removeEventListener('mousemove', handleMouseMove);
                     this.canvas.removeEventListener('mouseleave', handleMouseLeave);
@@ -362,7 +558,6 @@
                 
                 document.addEventListener('visibilitychange', handleVisibilityChange);
                 
-                // Add to cleanup
                 const originalCleanup = this.cleanup || (() => {});
                 this.cleanup = () => {
                     originalCleanup();
@@ -425,33 +620,29 @@
             }
         }
         
-        // Initialize the fuzzy text when the page loads
+        // Initialize when page loads
         window.addEventListener('load', () => {
             const canvas = document.getElementById('fuzzyCanvas');
             
-            // Check if canvas is available
             if (!canvas) {
                 console.error('Main canvas not found');
                 return;
             }
             
-            // Responsive font size based on screen width
+            // Responsive scaling
             const isMobile = window.innerWidth <= 768;
-            const fontSize = isMobile ? Math.min(window.innerWidth * 0.25, 120) : 120;
+            const scale = isMobile ? 0.6 : 0.8;
             
-            // Main title with Helvetica font
-            new FuzzyText(canvas, {
-                text: '2019 ink',
-                fontSize: fontSize,
-                fontWeight: 'bold', // Use bold weight for Helvetica
-                fontFamily: 'Helvetica, Arial, sans-serif', // Helvetica with fallbacks
-                color: '#fff',
+            // Main logo with PNG image
+            new FuzzyImage(canvas, {
+                imageSrc: '2019logo.png', // Your uploaded PNG file
+                scale: scale,
                 baseIntensity: 0.2,
                 hoverIntensity: 0.5,
                 enableHover: true
             });
             
-            // Create fuzzy buttons (keeping original font for contrast)
+            // Create fuzzy buttons (unchanged)
             const buttonCanvases = document.querySelectorAll('.btn-canvas');
             buttonCanvases.forEach(canvas => {
                 const text = canvas.getAttribute('data-text');
@@ -461,7 +652,7 @@
                     text: text,
                     fontSize: buttonFontSize,
                     fontWeight: 'bold',
-                    fontFamily: 'Helvetica, Arial, sans-serif', // Helvetica for buttons too
+                    fontFamily: 'Helvetica, Arial, sans-serif',
                     color: '#fff',
                     baseIntensity: 0.15,
                     hoverIntensity: 0.4,
@@ -472,7 +663,6 @@
         
         // Handle page unload to clean up animations
         window.addEventListener('beforeunload', () => {
-            // Cancel any running animations
             if (window.requestAnimationFrame) {
                 const highestId = setTimeout(() => {
                     for (let i = highestId; i >= 0; i--) {
