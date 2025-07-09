@@ -250,8 +250,39 @@
             
             async init() {
                 try {
+                    // Wait for fonts to be ready first
                     if (document.fonts?.ready) {
                         await document.fonts.ready;
+                    }
+                    
+                    // Check if our specific font is loaded
+                    let fontLoaded = false;
+                    const maxAttempts = 20;
+                    let attempts = 0;
+                    
+                    while (!fontLoaded && attempts < maxAttempts) {
+                        const testCanvas = document.createElement('canvas');
+                        const testCtx = testCanvas.getContext('2d');
+                        testCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
+                        
+                        // Test if font is actually loaded by checking if it renders differently than Arial
+                        testCtx.font = `${this.fontWeight} ${this.fontSize}px Arial`;
+                        const arialWidth = testCtx.measureText(this.text).width;
+                        
+                        testCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
+                        const customWidth = testCtx.measureText(this.text).width;
+                        
+                        // If widths are different, the custom font is loaded
+                        if (Math.abs(customWidth - arialWidth) > 1) {
+                            fontLoaded = true;
+                        } else {
+                            await new Promise(resolve => setTimeout(resolve, 50));
+                            attempts++;
+                        }
+                    }
+                    
+                    if (!fontLoaded) {
+                        console.warn('Font may not be fully loaded, proceeding anyway');
                     }
                     
                     this.offscreen = document.createElement('canvas');
