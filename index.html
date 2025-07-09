@@ -207,6 +207,7 @@
 <body>
     <div class="scroll-spacer"></div>
     <div class="container">
+        <div style="font-family: 'Ghastly Panic'; opacity: 0; position: absolute; top: -1000px;">2019 ink</div>
         <canvas id="logoCanvas"></canvas>
         <div class="buttons">
             <a href="shop.html" class="btn" id="shopBtn" aria-label="Shop - Browse our products">
@@ -221,10 +222,7 @@
 
     <script>
         // Force load font before any canvas rendering
-        const font = new FontFace('Ghastly Panic', 'url(fonts/Ghastly Panic.woff2)');
-        font.load().then(() => {
-            document.fonts.add(font);
-        });
+        // (removed - using simpler approach)
 
         // FuzzyText implementation for all text elements
         class FuzzyText {
@@ -435,11 +433,10 @@
         }
         
         // Initialize when page loads
-        window.addEventListener('load', async () => {
-            // Wait for fonts to be loaded
-            await document.fonts.ready;
-            
-            const logoCanvas = document.getElementById('logoCanvas');
+        window.addEventListener('load', () => {
+            // Simple 2 second delay to ensure font is loaded
+            setTimeout(() => {
+                const logoCanvas = document.getElementById('logoCanvas');
             
             if (!logoCanvas) {
                 console.error('Logo canvas not found');
@@ -479,6 +476,7 @@
                     enableHover: true
                 });
             });
+            }, 2000); // 2 second delay
         });
         
         // Handle page unload to clean up animations
