@@ -23,7 +23,7 @@
             src: url('fonts/Ghastly Panic.woff2') format('woff2');
             font-weight: normal;
             font-style: normal;
-            font-display: swap;
+            font-display: block;
         }
         
         * {
@@ -427,8 +427,16 @@
             }
         }
         
-        // Initialize when page loads
-        window.addEventListener('load', () => {
+        // Initialize when page and fonts are loaded
+        async function initializeApp() {
+            // Wait for fonts to be ready
+            if (document.fonts && document.fonts.ready) {
+                await document.fonts.ready;
+            }
+            
+            // Additional wait to ensure custom fonts are loaded
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
             const logoCanvas = document.getElementById('logoCanvas');
             
             if (!logoCanvas) {
@@ -469,7 +477,10 @@
                     enableHover: true
                 });
             });
-        });
+        }
+        
+        // Call the initialization function when page loads
+        window.addEventListener('load', initializeApp);
         
         // Handle page unload to clean up animations
         window.addEventListener('beforeunload', () => {
