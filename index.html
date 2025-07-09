@@ -6,6 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
+    <link rel="preload" href="fonts/Ghastly Panic.woff2" as="font" type="font/woff2" crossorigin>
     <title>2019 ink</title>
     <style>
         /* Custom Font Definitions */
@@ -429,13 +430,25 @@
         
         // Initialize when page and fonts are loaded
         async function initializeApp() {
-            // Wait for fonts to be ready
-            if (document.fonts && document.fonts.ready) {
-                await document.fonts.ready;
+            // Force load the font first
+            try {
+                const font = new FontFace('Ghastly Panic', 'url(fonts/Ghastly Panic.woff2)');
+                await font.load();
+                document.fonts.add(font);
+                
+                // Wait for all fonts to be ready
+                if (document.fonts && document.fonts.ready) {
+                    await document.fonts.ready;
+                }
+                
+                // Additional wait to ensure font is fully applied
+                await new Promise(resolve => setTimeout(resolve, 200));
+                
+            } catch (error) {
+                console.error('Font loading failed:', error);
+                // Continue anyway after a short delay
+                await new Promise(resolve => setTimeout(resolve, 100));
             }
-            
-            // Additional wait to ensure custom fonts are loaded
-            await new Promise(resolve => setTimeout(resolve, 100));
             
             const logoCanvas = document.getElementById('logoCanvas');
             
