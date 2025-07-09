@@ -7,16 +7,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
     <link rel="preload" href="fonts/Ghastly Panic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/helvetica-bold.woff2" as="font" type="font/woff2" crossorigin>
     <title>2019 ink</title>
     <style>
-        /* Custom Font Definitions */
+        /* Font Definitions */
         @font-face {
             font-family: 'Helvetica';
             src: url('fonts/helvetica-bold.woff2') format('woff2'),
                  url('fonts/helvetica-bold.woff') format('woff');
             font-weight: bold;
             font-style: normal;
-            font-display: swap;
+            font-display: block;
         }
         
         @font-face {
@@ -33,60 +34,46 @@
             box-sizing: border-box;
         }
         
-        html {
-            background: #000 !important;
-            height: 100% !important;
-            width: 100% !important;
-            overflow: hidden !important;
+        html, body {
+            background: #000;
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
             -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         body {
-            background: #000 !important;
-            display: block;
-            height: auto;
-            min-height: calc(100vh + 100px);
-            width: 100vw !important;
-            position: relative;
-            margin: 0 !important;
-            padding: 0 !important;
-            font-family: Arial, sans-serif;
             overflow-y: auto;
-            overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            transform: translateZ(0);
-        }
-        
-        .scroll-spacer {
-            height: 50px;
-            width: 100%;
-            background: #000;
+            font-family: Arial, sans-serif;
         }
         
         .container {
-            text-align: center;
-            width: 100vw;
-            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
+            min-height: 100vh;
+            width: 100%;
+            text-align: center;
             gap: 80px;
-            padding-top: 15vh;
-            will-change: transform;
-            transform: translateZ(0);
-            position: relative;
+            padding: 15vh 20px 50px;
             background: #000;
         }
         
         canvas {
             display: block;
-            max-width: 100vw;
-            max-height: 100vh;
-            will-change: transform;
-            transform: translateZ(0);
+            max-width: 100%;
+            max-height: 50vh;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            will-change: opacity;
+        }
+        
+        canvas.loaded {
+            opacity: 1;
         }
         
         .buttons {
@@ -94,8 +81,6 @@
             gap: 30px;
             justify-content: center;
             flex-wrap: wrap;
-            will-change: transform;
-            transform: translateZ(0);
         }
         
         .btn {
@@ -103,21 +88,13 @@
             border: none;
             color: #fff;
             padding: 0;
-            font-size: 18px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            position: relative;
             transition: transform 0.2s ease-out;
-            will-change: transform;
-            transform: translateZ(0);
-            -webkit-tap-highlight-color: transparent;
-            /* Accessibility improvements */
             outline: none;
             border-radius: 4px;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .btn:focus-visible {
@@ -130,57 +107,31 @@
         }
         
         .btn canvas {
-            display: block;
             cursor: pointer;
-            will-change: transform;
-            transform: translateZ(0);
         }
         
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
-            canvas {
-                transform: scale(0.8) translateZ(0);
-            }
-            
-            .buttons {
-                gap: 40px;
-                flex-direction: column;
-                align-items: center;
-            }
-            
             .container {
                 gap: 60px;
                 padding-top: 10vh;
             }
             
-            .btn canvas {
-                display: block !important;
-                visibility: visible !important;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            canvas {
-                transform: scale(0.8) translateZ(0);
-            }
-            
             .buttons {
                 gap: 40px;
                 flex-direction: column;
                 align-items: center;
             }
-            
+        }
+        
+        @media (max-width: 480px) {
             .container {
                 gap: 50px;
                 padding-top: 8vh;
             }
-            
-            .btn canvas {
-                display: block !important;
-                visibility: visible !important;
-            }
         }
         
-        /* Performance optimizations for mobile */
+        /* Touch Device Optimizations */
         @media (hover: none) and (pointer: coarse) {
             .btn:hover {
                 transform: none;
@@ -188,24 +139,19 @@
             
             .btn:active {
                 transform: scale(0.95);
-                transition: transform 0.05s ease-out; /* Faster for touch */
+                transition: transform 0.05s ease-out;
             }
         }
         
-        /* Reduced motion preference */
+        /* Reduced Motion */
         @media (prefers-reduced-motion: reduce) {
-            .btn {
-                transition: none;
-            }
-            
-            .btn:active {
+            .btn, canvas {
                 transition: none;
             }
         }
     </style>
 </head>
 <body>
-    <div class="scroll-spacer"></div>
     <div class="container">
         <canvas id="logoCanvas"></canvas>
         <div class="buttons">
@@ -217,10 +163,8 @@
             </a>
         </div>
     </div>
-    <div class="scroll-spacer"></div>
 
     <script>
-        // FuzzyText implementation for all text elements
         class FuzzyText {
             constructor(canvas, options = {}) {
                 this.canvas = canvas;
@@ -231,6 +175,7 @@
                     return;
                 }
                 
+                // Configuration
                 this.text = options.text || 'TEXT';
                 this.fontSize = options.fontSize || 60;
                 this.fontWeight = options.fontWeight || 'bold';
@@ -240,142 +185,110 @@
                 this.baseIntensity = options.baseIntensity || 0.15;
                 this.hoverIntensity = options.hoverIntensity || 0.4;
                 
+                // State
                 this.isHovering = false;
+                this.isVisible = true;
                 this.animationFrameId = null;
                 this.fuzzRange = 30;
-                this.isVisible = true;
                 
                 this.init();
             }
             
             async init() {
                 try {
-                    // Wait for fonts to be ready first
-                    if (document.fonts?.ready) {
-                        await document.fonts.ready;
-                    }
+                    // Wait for font loading
+                    await new Promise(resolve => setTimeout(resolve, 800));
                     
-                    // Check if our specific font is loaded
-                    let fontLoaded = false;
-                    const maxAttempts = 20;
-                    let attempts = 0;
-                    
-                    while (!fontLoaded && attempts < maxAttempts) {
-                        const testCanvas = document.createElement('canvas');
-                        const testCtx = testCanvas.getContext('2d');
-                        testCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
-                        
-                        // Test if font is actually loaded by checking if it renders differently than Arial
-                        testCtx.font = `${this.fontWeight} ${this.fontSize}px Arial`;
-                        const arialWidth = testCtx.measureText(this.text).width;
-                        
-                        testCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
-                        const customWidth = testCtx.measureText(this.text).width;
-                        
-                        // If widths are different, the custom font is loaded
-                        if (Math.abs(customWidth - arialWidth) > 1) {
-                            fontLoaded = true;
-                        } else {
-                            await new Promise(resolve => setTimeout(resolve, 50));
-                            attempts++;
-                        }
-                    }
-                    
-                    if (!fontLoaded) {
-                        console.warn('Font may not be fully loaded, proceeding anyway');
-                    }
-                    
-                    this.offscreen = document.createElement('canvas');
-                    this.offCtx = this.offscreen.getContext('2d');
-                    
-                    if (!this.offCtx) {
-                        console.error('Offscreen canvas context not available');
-                        return;
-                    }
-                    
-                    this.offCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
-                    this.offCtx.textBaseline = 'alphabetic';
-                    const metrics = this.offCtx.measureText(this.text);
-                    
-                    const actualLeft = metrics.actualBoundingBoxLeft ?? 0;
-                    const actualRight = metrics.actualBoundingBoxRight ?? metrics.width;
-                    const actualAscent = metrics.actualBoundingBoxAscent ?? this.fontSize;
-                    const actualDescent = metrics.actualBoundingBoxDescent ?? this.fontSize * 0.2;
-                    
-                    const textBoundingWidth = Math.ceil(actualLeft + actualRight);
-                    const tightHeight = Math.ceil(actualAscent + actualDescent);
-                    
-                    const extraWidthBuffer = 10;
-                    const offscreenWidth = textBoundingWidth + extraWidthBuffer;
-                    
-                    this.offscreen.width = offscreenWidth;
-                    this.offscreen.height = tightHeight;
-                    
-                    const xOffset = extraWidthBuffer / 2;
-                    this.offCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
-                    this.offCtx.textBaseline = 'alphabetic';
-                    this.offCtx.fillStyle = this.color;
-                    this.offCtx.fillText(this.text, xOffset - actualLeft, actualAscent);
-                    
-                    const horizontalMargin = 50;
-                    const verticalMargin = 0;
-                    this.canvas.width = offscreenWidth + horizontalMargin * 2;
-                    this.canvas.height = tightHeight + verticalMargin * 2;
-                    this.ctx.translate(horizontalMargin, verticalMargin);
-                    
-                    this.interactiveLeft = horizontalMargin + xOffset;
-                    this.interactiveTop = verticalMargin;
-                    this.interactiveRight = this.interactiveLeft + textBoundingWidth;
-                    this.interactiveBottom = this.interactiveTop + tightHeight;
-                    
-                    this.offscreenWidth = offscreenWidth;
-                    this.tightHeight = tightHeight;
-                    
+                    this.setupCanvas();
                     this.setupEventListeners();
                     this.setupVisibilityHandling();
                     this.startAnimation();
+                    
+                    // Show canvas once ready
+                    setTimeout(() => {
+                        this.canvas.classList.add('loaded');
+                    }, 100);
+                    
                 } catch (error) {
                     console.error('FuzzyText initialization failed:', error);
                 }
             }
             
+            setupCanvas() {
+                // Create offscreen canvas for text rendering
+                this.offscreen = document.createElement('canvas');
+                this.offCtx = this.offscreen.getContext('2d');
+                
+                if (!this.offCtx) {
+                    console.error('Offscreen canvas context not available');
+                    return;
+                }
+                
+                // Measure text
+                this.offCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
+                this.offCtx.textBaseline = 'alphabetic';
+                const metrics = this.offCtx.measureText(this.text);
+                
+                // Calculate dimensions
+                const actualLeft = metrics.actualBoundingBoxLeft ?? 0;
+                const actualRight = metrics.actualBoundingBoxRight ?? metrics.width;
+                const actualAscent = metrics.actualBoundingBoxAscent ?? this.fontSize;
+                const actualDescent = metrics.actualBoundingBoxDescent ?? this.fontSize * 0.2;
+                
+                const textWidth = Math.ceil(actualLeft + actualRight);
+                const textHeight = Math.ceil(actualAscent + actualDescent);
+                
+                // Setup offscreen canvas
+                const buffer = 10;
+                this.offscreen.width = textWidth + buffer;
+                this.offscreen.height = textHeight;
+                
+                // Draw text to offscreen canvas
+                const xOffset = buffer / 2;
+                this.offCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
+                this.offCtx.textBaseline = 'alphabetic';
+                this.offCtx.fillStyle = this.color;
+                this.offCtx.fillText(this.text, xOffset - actualLeft, actualAscent);
+                
+                // Setup main canvas
+                const margin = 50;
+                this.canvas.width = this.offscreen.width + margin * 2;
+                this.canvas.height = this.offscreen.height + margin * 2;
+                this.ctx.translate(margin, margin);
+                
+                // Store dimensions for interaction
+                this.interactiveLeft = margin + xOffset;
+                this.interactiveTop = margin;
+                this.interactiveRight = this.interactiveLeft + textWidth;
+                this.interactiveBottom = this.interactiveTop + textHeight;
+            }
+            
             setupEventListeners() {
                 if (!this.enableHover) return;
                 
-                const handleMouseMove = (e) => {
+                const handleInteraction = (e) => {
                     const rect = this.canvas.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
+                    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
+                    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
                     this.isHovering = this.isInsideTextArea(x, y);
                 };
                 
-                const handleMouseLeave = () => {
+                const handleEnd = () => {
                     this.isHovering = false;
                 };
                 
-                const handleTouchMove = (e) => {
-                    e.preventDefault();
-                    const rect = this.canvas.getBoundingClientRect();
-                    const touch = e.touches[0];
-                    const x = touch.clientX - rect.left;
-                    const y = touch.clientY - rect.top;
-                    this.isHovering = this.isInsideTextArea(x, y);
-                };
+                // Unified event handling
+                this.canvas.addEventListener('mousemove', handleInteraction);
+                this.canvas.addEventListener('touchmove', handleInteraction, { passive: true });
+                this.canvas.addEventListener('mouseleave', handleEnd);
+                this.canvas.addEventListener('touchend', handleEnd);
                 
-                const handleTouchEnd = () => {
-                    this.isHovering = false;
-                };
-                
-                this.canvas.addEventListener('mousemove', handleMouseMove);
-                this.canvas.addEventListener('mouseleave', handleMouseLeave);
-                this.canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-                this.canvas.addEventListener('touchend', handleTouchEnd);
-                
+                // Store cleanup function
                 this.cleanup = () => {
-                    this.canvas.removeEventListener('mousemove', handleMouseMove);
-                    this.canvas.removeEventListener('mouseleave', handleMouseLeave);
-                    this.canvas.removeEventListener('touchmove', handleTouchMove);
-                    this.canvas.removeEventListener('touchend', handleTouchEnd);
+                    this.canvas.removeEventListener('mousemove', handleInteraction);
+                    this.canvas.removeEventListener('touchmove', handleInteraction);
+                    this.canvas.removeEventListener('mouseleave', handleEnd);
+                    this.canvas.removeEventListener('touchend', handleEnd);
                 };
             }
             
@@ -383,20 +296,16 @@
                 const handleVisibilityChange = () => {
                     if (document.hidden) {
                         this.isVisible = false;
-                        if (this.animationFrameId) {
-                            cancelAnimationFrame(this.animationFrameId);
-                            this.animationFrameId = null;
-                        }
+                        this.stopAnimation();
                     } else {
                         this.isVisible = true;
-                        if (!this.animationFrameId) {
-                            this.startAnimation();
-                        }
+                        this.startAnimation();
                     }
                 };
                 
                 document.addEventListener('visibilitychange', handleVisibilityChange);
                 
+                // Add to cleanup
                 const originalCleanup = this.cleanup || (() => {});
                 this.cleanup = () => {
                     originalCleanup();
@@ -405,41 +314,31 @@
             }
             
             isInsideTextArea(x, y) {
-                return (
-                    x >= this.interactiveLeft &&
-                    x <= this.interactiveRight &&
-                    y >= this.interactiveTop &&
-                    y <= this.interactiveBottom
-                );
+                return x >= this.interactiveLeft && x <= this.interactiveRight &&
+                       y >= this.interactiveTop && y <= this.interactiveBottom;
             }
             
             startAnimation() {
-                if (!this.isVisible) return;
+                if (!this.isVisible || this.animationFrameId) return;
                 
                 const animate = () => {
                     if (!this.isVisible) return;
                     
+                    // Clear canvas
                     this.ctx.clearRect(
-                        -this.fuzzRange,
-                        -this.fuzzRange,
-                        this.offscreenWidth + 2 * this.fuzzRange,
-                        this.tightHeight + 2 * this.fuzzRange
+                        -this.fuzzRange, -this.fuzzRange,
+                        this.offscreen.width + 2 * this.fuzzRange,
+                        this.offscreen.height + 2 * this.fuzzRange
                     );
                     
+                    // Apply fuzzy effect
                     const intensity = this.isHovering ? this.hoverIntensity : this.baseIntensity;
                     
-                    for (let j = 0; j < this.tightHeight; j++) {
+                    for (let j = 0; j < this.offscreen.height; j++) {
                         const dx = Math.floor(intensity * (Math.random() - 0.5) * this.fuzzRange);
                         this.ctx.drawImage(
-                            this.offscreen,
-                            0,
-                            j,
-                            this.offscreenWidth,
-                            1,
-                            dx,
-                            j,
-                            this.offscreenWidth,
-                            1
+                            this.offscreen, 0, j, this.offscreen.width, 1,
+                            dx, j, this.offscreen.width, 1
                         );
                     }
                     
@@ -449,50 +348,38 @@
                 animate();
             }
             
-            destroy() {
+            stopAnimation() {
                 if (this.animationFrameId) {
                     cancelAnimationFrame(this.animationFrameId);
+                    this.animationFrameId = null;
                 }
+            }
+            
+            destroy() {
+                this.stopAnimation();
                 if (this.cleanup) {
                     this.cleanup();
                 }
             }
         }
         
-        // Initialize when page and fonts are loaded
+        // Initialize application
         async function initializeApp() {
-            // Force load the font first
-            try {
-                const font = new FontFace('Ghastly Panic', 'url(fonts/Ghastly Panic.woff2)');
-                await font.load();
-                document.fonts.add(font);
-                
-                // Wait for all fonts to be ready
-                if (document.fonts && document.fonts.ready) {
-                    await document.fonts.ready;
-                }
-                
-                // Additional wait to ensure font is fully applied
-                await new Promise(resolve => setTimeout(resolve, 200));
-                
-            } catch (error) {
-                console.error('Font loading failed:', error);
-                // Continue anyway after a short delay
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
+            // Wait for font loading
+            await new Promise(resolve => setTimeout(resolve, 1000));
             
             const logoCanvas = document.getElementById('logoCanvas');
-            
             if (!logoCanvas) {
                 console.error('Logo canvas not found');
                 return;
             }
             
-            // Responsive scaling
+            // Responsive font sizing
             const isMobile = window.innerWidth <= 768;
             const logoFontSize = isMobile ? 140 : 200;
+            const buttonFontSize = isMobile ? 40 : 60;
             
-            // Main logo with fuzzy text effect
+            // Create main logo
             new FuzzyText(logoCanvas, {
                 text: '2019 ink',
                 fontSize: logoFontSize,
@@ -504,17 +391,14 @@
                 enableHover: true
             });
             
-            // Create fuzzy buttons
-            const buttonCanvases = document.querySelectorAll('.btn-canvas');
-            buttonCanvases.forEach(canvas => {
+            // Create button texts
+            document.querySelectorAll('.btn-canvas').forEach(canvas => {
                 const text = canvas.getAttribute('data-text');
-                const buttonFontSize = isMobile ? 40 : 60;
-                
                 new FuzzyText(canvas, {
                     text: text,
                     fontSize: buttonFontSize,
                     fontWeight: 'bold',
-                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontFamily: 'Helvetica',
                     color: '#fff',
                     baseIntensity: 0.15,
                     hoverIntensity: 0.4,
@@ -523,17 +407,18 @@
             });
         }
         
-        // Call the initialization function when page loads
-        window.addEventListener('load', initializeApp);
+        // Start when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
         
-        // Handle page unload to clean up animations
+        // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
-            if (window.requestAnimationFrame) {
-                const highestId = setTimeout(() => {
-                    for (let i = highestId; i >= 0; i--) {
-                        cancelAnimationFrame(i);
-                    }
-                }, 0);
+            // Cancel any remaining animation frames
+            for (let i = 0; i < 10000; i++) {
+                cancelAnimationFrame(i);
             }
         });
     </script>
