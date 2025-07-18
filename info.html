@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Info - 2019 ink</title>
+    <style>
+        /* Custom Font Definitions */
+        @font-face {
+            font-family: 'Old London';
+            src: url('fonts/old-london-webfont.woff2') format('woff2'),
+                 url('fonts/old-london-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Helvetica Now Bold';
+            src: url('fonts/helvetica-now-bold.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        html {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body { 
+            margin: 0;
+            padding: 0;
+            padding-top: calc(120px + env(safe-area-inset-top));
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            font-family: 'Helvetica Now Bold', sans-serif;
+            -webkit-overflow-scrolling: touch;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transform: translateZ(0);
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 40px;
+        }
+        
+        .text-section {
+            max-width: 800px;
+            width: 90%;
+            margin-top: 60px;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .text-content {
+            color: #fff;
+            font-size: 22px;
+            line-height: 1.9;
+            font-weight: normal;
+            letter-spacing: 1.2px;
+            font-family: 'Old London', serif;
+            text-transform: lowercase;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            margin: 0;
+        }
+        
+        .map-container {
+            width: 85vw;
+            max-width: 1200px;
+            height: 65vh;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: invert(90%) hue-rotate(180deg) saturate(0.3) brightness(0.7);
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: calc(30px + env(safe-area-inset-top));
+            left: 30px;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 25px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.85);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            -webkit-tap-highlight-color: transparent;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 255, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: calc(140px + env(safe-area-inset-top));
+                padding-left: 15px;
+                padding-right: 15px;
+                padding-bottom: 30px;
+            }
+            
+            .text-section {
+                padding: 30px 25px;
+                margin-top: 40px;
+                max-width: 95%;
+            }
+            
+            .text-content {
+                font-size: 18px;
+                line-height: 1.7;
+                letter-spacing: 1px;
+            }
+            
+            .map-container {
+                width: 95vw;
+                height: 50vh;
+            }
+            
+            .back-btn {
+                top: calc(20px + env(safe-area-inset-top));
+                left: 15px;
+                padding: 12px 20px;
+                font-size: 14px;
+                z-index: 1000;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding-top: calc(160px + env(safe-area-inset-top));
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            
+            .text-section {
+                padding: 25px 20px;
+                margin-top: 30px;
+            }
+            
+            .text-content {
+                font-size: 16px;
+                line-height: 1.6;
+                letter-spacing: 0.8px;
+            }
+            
+            .back-btn {
+                top: calc(15px + env(safe-area-inset-top));
+                left: 10px;
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back</a>
+    
+    <div class="map-container">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d201880.0791044734!2d-122.31081555!3d37.8044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808f867b081766b1%3A0x94ea33f303e01be!2sOakland%2C%20CA!5e0!3m2!1sen!2sus!4v1000000000000!5m2!1sen!2sus"
+            allowfullscreen="" 
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+    
+    <div class="text-section">
+        <div class="text-content">
+            Jag kände det i mina ben när jag tittade i spegeln. Bilden som såg tillbaka på mig var så märklig och vacker att jag nästan kände en gnista av känslor i mitt kalla hjärta.<br><br>
+            Om jag hade dött i det ögonblicket skulle det ha varit en fantastisk stund för världen att förstå att jag hade levt, för första gången i hela min existens. Kanske såg jag äntligen det äkta, just där och då, långt från början.<br><br>
+            Det var en enastående upplevelse. Resan hade varit så lång att jag nästan glömde hur mycket vi hade förlorat.<br><br>
+            Jag har inget kvar att göra.<br><br>
+            Min enda begäran till dig, när tiden kommer: Smycka mitt hjärta och för mig hem. Jag kommer att ta emot det som väntar mig med värdighet oavsett konsekvenser oavsett utfall.
+        </div>
+    </div>
+</body>
+</html>
