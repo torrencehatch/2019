@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Instagram - 2019 ink</title>
+    <style>
+        @font-face {
+            font-family: 'HelveticaNowBold';
+            src: url('fonts/helvetica-now-bold.woff2') format('woff2');
+            font-display: swap;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'HelveticaNowBold', sans-serif;
+            text-align: center;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: calc(30px + env(safe-area-inset-top));
+            left: 30px;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 25px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.85);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            -webkit-tap-highlight-color: transparent;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            padding: 120px 20px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">Home</a>
+    <div class="container">
+        <h1>Instagram</h1>
+        <p>Follow us on Instagram for updates.</p>
+    </div>
+</body>
+</html>
