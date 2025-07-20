@@ -381,6 +381,29 @@
             margin: 0;
         }
 
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 80px auto 40px auto;
+            padding: 20px;
+            color: #aaa;
+            font-size: 14px;
+            border-top: 1px solid #111;
+        }
+
+        .quick-links a {
+            color: #aaa;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: #fff;
+        }
+
         @media (max-width: 768px) {
             .cart-content {
                 width: 95%;
@@ -406,6 +429,11 @@
             .back-btn, .cart-btn {
                 padding: 12px 20px;
                 font-size: 14px;
+            }
+
+            .quick-links {
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
@@ -493,6 +521,15 @@
             </div>
         </a>
     </div>
+
+    <footer class="quick-links">
+        <a href="instagram.html">Instagram</a>
+        <a href="contact.html">Contact</a>
+        <a href="support.html">Support</a>
+        <a href="shipping.html">Shipping</a>
+        <a href="returns.html">Returns</a>
+        <a href="size-guide.html">Size Guide</a>
+    </footer>
 
     <script>
         // Cart functionality - persisted using localStorage
