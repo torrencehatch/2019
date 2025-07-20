@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#000000" name="theme-color"/>
+<link as="font" crossorigin="" href="fonts/Ghastly Panic.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="fonts/helvetica-now-bold.woff2" rel="preload" type="font/woff2"/>
+<title>2019 ink</title>
+<style>
+        /* Custom Font Definitions */
+        @font-face {
+            font-family: 'HelveticaNowBold';
+            src: url('fonts/helvetica-now-bold.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Ghastly Panic';
+            src: url('fonts/Ghastly Panic.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            background: #000 !important;
+            height: 100% !important;
+            width: 100% !important;
+            overflow: hidden !important;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            background: #000 !important;
+            display: block;
+            height: auto;
+            min-height: calc(100vh + 100px);
+            width: 100vw !important;
+            position: relative;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: 'HelveticaNowBold', sans-serif;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transform: translateZ(0);
+        }
+        
+        .scroll-spacer {
+            height: 50px;
+            width: 100%;
+            background: #000;
+        }
+        
+        .container {
+            text-align: center;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 80px;
+            will-change: transform;
+            transform: translateZ(0);
+            position: relative;
+            background: #000;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            will-change: transform;
+            transform: translateZ(0);
+            width: 100%;
+        }
+        
+        canvas {
+            display: block;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        .btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding: 0;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: transform 0.2s ease-out;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            border-radius: 4px;
+        }
+        
+        .btn:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .btn canvas {
+            display: block;
+            cursor: pointer;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                gap: 60px;
+                justify-content: flex-start;
+                padding-top: 50px;
+                height: auto;
+            }
+
+            .buttons {
+                gap: 50px;
+                flex-direction: column;
+                align-items: center;
+            }
+            .scroll-spacer {
+                height: 20px;
+            }
+            body {
+                min-height: 100vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                gap: 50px;
+                justify-content: flex-start;
+                padding-top: 40px;
+                height: auto;
+            }
+
+            .buttons {
+                gap: 40px;
+                flex-direction: column;
+                align-items: center;
+            }
+            .scroll-spacer {
+                height: 20px;
+            }
+            body {
+                min-height: 100vh;
+            }
+        }
+        
+        /* Performance optimizations for mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover {
+                transform: none;
+            }
+            
+            .btn:active {
+                transform: scale(0.95);
+                transition: transform 0.05s ease-out;
+            }
+        }
+        
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .btn {
+                transition: none;
+            }
+
+            .btn:active {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="scroll-spacer"></div>
+<div class="container">
+<div style="font-family: 'Ghastly Panic'; opacity: 0; position: absolute; top: -1000px;">2019 ink</div>
+<div class="logo-container">
+<canvas id="logoCanvas"></canvas>
+</div>
+<div class="buttons">
+<a aria-label="Shop - Browse our products" class="btn" href="shop.html" id="shopBtn">
+<canvas class="btn-canvas" data-text="SHOP"></canvas>
+</a>
+<a aria-label="Info - Learn more about us" class="btn" href="info.html" id="infoBtn">
+<canvas class="btn-canvas" data-text="INFO"></canvas>
+</a>
+</div>
+</div>
+<div class="scroll-spacer"></div>
+<script>
+        // FuzzyText implementation for all text elements
+        class FuzzyText {
+            constructor(canvas, options = {}) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                
+                if (!this.ctx) {
+                    console.error('Canvas context not available');
+                    return;
+                }
+                
+                this.text = options.text || 'TEXT';
+                this.fontSize = options.fontSize || 60;
+                this.fontWeight = options.fontWeight || 'bold';
+                this.fontFamily = options.fontFamily || 'HelveticaNowBold, sans-serif';
+                this.color = options.color || '#fff';
+                this.enableHover = options.enableHover !== false;
+                this.baseIntensity = options.baseIntensity || 0.15;
+                this.hoverIntensity = options.hoverIntensity || 0.4;
+                
+                this.isHovering = false;
+                this.animationFrameId = null;
+                this.fuzzRange = 30;
+                this.isVisible = true;
+                
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    if (document.fonts?.ready) {
+                        await document.fonts.ready;
+                    }
+                    
+                    this.offscreen = document.createElement('canvas');
+                    this.offCtx = this.offscreen.getContext('2d');
+                    
+                    if (!this.offCtx) {
+                        console.error('Offscreen canvas context not available');
+                        return;
+                    }
+                    
+                    this.offCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
+                    this.offCtx.textBaseline = 'middle';
+                    this.offCtx.textAlign = 'center';
+                    const metrics = this.offCtx.measureText(this.text);
+                    
+                    // Calculate precise text dimensions
+                    const actualLeft = metrics.actualBoundingBoxLeft ?? 0;
+                    const actualRight = metrics.actualBoundingBoxRight ?? metrics.width;
+                    const actualAscent = metrics.actualBoundingBoxAscent ?? this.fontSize * 0.7;
+                    const actualDescent = metrics.actualBoundingBoxDescent ?? this.fontSize * 0.3;
+                    
+                    const textWidth = actualLeft + actualRight;
+                    const textHeight = actualAscent + actualDescent;
+                    
+                    // Set offscreen canvas size with minimal padding
+                    this.offscreen.width = Math.ceil(textWidth + 10);
+                    this.offscreen.height = Math.ceil(textHeight + 10);
+                    
+                    // Re-apply font settings after canvas resize
+                    this.offCtx.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
+                    this.offCtx.textBaseline = 'middle';
+                    this.offCtx.textAlign = 'center';
+                    this.offCtx.fillStyle = this.color;
+                    
+                    // Draw text perfectly centered
+                    this.offCtx.fillText(
+                        this.text, 
+                        this.offscreen.width / 2, 
+                        this.offscreen.height / 2
+                    );
+                    
+                    // Set main canvas size to exactly match offscreen
+                    this.canvas.width = this.offscreen.width;
+                    this.canvas.height = this.offscreen.height;
+                    
+                    // Store dimensions for interaction
+                    this.offscreenWidth = this.offscreen.width;
+                    this.offscreenHeight = this.offscreen.height;
+                    
+                    this.setupEventListeners();
+                    this.setupVisibilityHandling();
+                    this.startAnimation();
+                } catch (error) {
+                    console.error('FuzzyText initialization failed:', error);
+                }
+            }
+            
+            setupEventListeners() {
+                if (!this.enableHover) return;
+                
+                const handleMouseMove = (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    this.isHovering = (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height);
+                };
+                
+                const handleMouseLeave = () => {
+                    this.isHovering = false;
+                };
+                
+                const handleTouchMove = (e) => {
+                    e.preventDefault();
+                    const rect = this.canvas.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    const x = touch.clientX - rect.left;
+                    const y = touch.clientY - rect.top;
+                    this.isHovering = (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height);
+                };
+                
+                const handleTouchEnd = () => {
+                    this.isHovering = false;
+                };
+                
+                this.canvas.addEventListener('mousemove', handleMouseMove);
+                this.canvas.addEventListener('mouseleave', handleMouseLeave);
+                this.canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+                this.canvas.addEventListener('touchend', handleTouchEnd);
+                
+                this.cleanup = () => {
+                    this.canvas.removeEventListener('mousemove', handleMouseMove);
+                    this.canvas.removeEventListener('mouseleave', handleMouseLeave);
+                    this.canvas.removeEventListener('touchmove', handleTouchMove);
+                    this.canvas.removeEventListener('touchend', handleTouchEnd);
+                };
+            }
+            
+            setupVisibilityHandling() {
+                const handleVisibilityChange = () => {
+                    if (document.hidden) {
+                        this.isVisible = false;
+                        if (this.animationFrameId) {
+                            cancelAnimationFrame(this.animationFrameId);
+                            this.animationFrameId = null;
+                        }
+                    } else {
+                        this.isVisible = true;
+                        if (!this.animationFrameId) {
+                            this.startAnimation();
+                        }
+                    }
+                };
+                
+                document.addEventListener('visibilitychange', handleVisibilityChange);
+                
+                const originalCleanup = this.cleanup || (() => {});
+                this.cleanup = () => {
+                    originalCleanup();
+                    document.removeEventListener('visibilitychange', handleVisibilityChange);
+                };
+            }
+            
+            startAnimation() {
+                if (!this.isVisible) return;
+                
+                const animate = () => {
+                    if (!this.isVisible) return;
+                    
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    const intensity = this.isHovering ? this.hoverIntensity : this.baseIntensity;
+                    
+                    for (let j = 0; j < this.offscreenHeight; j++) {
+                        const dx = Math.floor(intensity * (Math.random() - 0.5) * this.fuzzRange);
+                        this.ctx.drawImage(
+                            this.offscreen,
+                            0,
+                            j,
+                            this.offscreenWidth,
+                            1,
+                            dx,
+                            j,
+                            this.offscreenWidth,
+                            1
+                        );
+                    }
+                    
+                    this.animationFrameId = requestAnimationFrame(animate);
+                };
+                
+                animate();
+            }
+            
+            destroy() {
+                if (this.animationFrameId) {
+                    cancelAnimationFrame(this.animationFrameId);
+                }
+                if (this.cleanup) {
+                    this.cleanup();
+                }
+            }
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            const init = () => {
+                const logoCanvas = document.getElementById('logoCanvas');
+            
+                if (!logoCanvas) {
+                    console.error('Logo canvas not found');
+                    return;
+                }
+                
+                // Responsive scaling
+                const isMobile = window.innerWidth <= 768;
+                const logoFontSize = isMobile ? 180 : 280;
+                
+                // Main logo with fuzzy text effect
+                new FuzzyText(logoCanvas, {
+                    text: '2019 ink',
+                    fontSize: logoFontSize,
+                    fontWeight: 'normal',
+                    fontFamily: 'Ghastly Panic',
+                    color: '#fff',
+                    baseIntensity: 0.2,
+                    hoverIntensity: 0.5,
+                    enableHover: true
+                });
+                
+                // Create fuzzy buttons
+                const buttonCanvases = document.querySelectorAll('.btn-canvas');
+                buttonCanvases.forEach(canvas => {
+                    const text = canvas.getAttribute('data-text');
+                    const buttonFontSize = isMobile ? 40 : 60;
+                    
+                    new FuzzyText(canvas, {
+                        text: text,
+                        fontSize: buttonFontSize,
+                        fontWeight: 'bold',
+                        fontFamily: 'HelveticaNowBold, sans-serif',
+                        color: '#fff',
+                        baseIntensity: 0.15,
+                        hoverIntensity: 0.4,
+                        enableHover: true
+                    });
+                });
+            };
+
+            if (document.fonts?.ready) {
+                document.fonts.ready.then(init);
+            } else {
+                init();
+            }
+        });
+        
+        // Handle page unload to clean up animations
+        window.addEventListener('beforeunload', () => {
+            if (window.requestAnimationFrame) {
+                const highestId = setTimeout(() => {
+                    for (let i = highestId; i >= 0; i--) {
+                        cancelAnimationFrame(i);
+                    }
+                }, 0);
+            }
+        });
+    </script>
+</body>
+</html>
