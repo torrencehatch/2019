@@ -44,52 +44,15 @@
         .container {
             padding: 120px 20px;
         }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        input, button {
-            padding: 10px;
-            border-radius: 4px;
-            border: none;
-        }
-
-        button {
-            background: #fff;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
     <a href="index.html" class="back-btn">Home</a>
     <div class="container">
         <h1>Contact</h1>
-        <form id="contactForm">
-            <input type="text" name="name" placeholder="Name" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="tel" name="phone" placeholder="Phone" required>
-            <button type="submit">Send</button>
-        </form>
+        <p>+1 (510) 621-3204</p>
     </div>
 
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            await fetch('/submit_contact', {
-                method: 'POST',
-                body: new URLSearchParams(formData)
-            });
-            e.target.reset();
-            alert('Thank you for contacting us!');
-        });
-    </script>
+    
 </body>
 </html>
