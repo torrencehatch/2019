@@ -1,56 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Size Guide - 2019 ink</title>
-    <style>
-        @font-face {
-            font-family: 'HelveticaNowBold';
-            src: url('fonts/helvetica-now-bold.woff2') format('woff2');
-            font-display: swap;
-        }
-        html, body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            color: #fff;
-            font-family: 'HelveticaNowBold', sans-serif;
-            text-align: center;
-        }
-        .back-btn {
-            position: fixed;
-            top: calc(30px + env(safe-area-inset-top));
-            left: 30px;
-            color: #fff;
-            text-decoration: none;
-            padding: 15px 25px;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            background: rgba(0, 0, 0, 0.85);
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-            -webkit-tap-highlight-color: transparent;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.95);
-            color: #000;
-            transform: translateY(-2px);
-        }
-        .container {
-            padding: 120px 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Size Guide - 2019 ink</title>
+  <style>
+    @font-face {
+      font-family: 'HelveticaNowBold';
+      src: url('fonts/helvetica-now-bold.woff2') format('woff2');
+      font-display: swap;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'HelveticaNowBold', Arial, sans-serif;
+      text-align: center;
+    }
+    .back-btn {
+      position: fixed;
+      top: calc(30px + env(safe-area-inset-top));
+      left: 30px;
+      color: #fff;
+      text-decoration: none;
+      padding: 15px 25px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      background: rgba(0, 0, 0, 0.85);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      -webkit-tap-highlight-color: transparent;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      transform: translateY(-2px);
+    }
+    .container {
+      padding: 120px 20px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+    table {
+      margin: 1em auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 400px;
+    }
+    th, td {
+      border: 1px solid #fff;
+      padding: 0.75em;
+      font-size: 1em;
+    }
+    th {
+      background-color: #111;
+    }
+    .how-to {
+      margin-top: 2em;
+      font-size: 0.95em;
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
-    <a href="index.html" class="back-btn">Home</a>
-    <div class="container">
-        <h1>Size Guide</h1>
-        <p>Size charts and measurements coming soon.</p>
+  <a href="index.html" class="back-btn">Home</a>
+  <div class="container">
+    <h1>Size Guide</h1>
+    <table>
+      <tr>
+        <th>Size</th>
+        <th>Chest (inches)</th>
+        <th>Length (inches)</th>
+      </tr>
+      <tr>
+        <td>Small</td>
+        <td>34–36</td>
+        <td>27</td>
+      </tr>
+      <tr>
+        <td>Medium</td>
+        <td>38–40</td>
+        <td>28</td>
+      </tr>
+      <tr>
+        <td>Large</td>
+        <td>42–44</td>
+        <td>29</td>
+      </tr>
+    </table>
+    <div class="how-to">
+      <p><strong>Chest:</strong> Measure around the fullest part of your chest, keeping the tape horizontal.</p>
+      <p><strong>Length:</strong> Measure from the highest point of the shoulder to the bottom hem.</p>
     </div>
+  </div>
 </body>
 </html>
