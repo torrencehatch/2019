@@ -16,6 +16,9 @@
       background-color: #000;
       color: #fff;
       font-family: 'HelveticaNowBold', Arial, sans-serif;
+      line-height: 1.6;
+    }
+    body {
       text-align: center;
     }
     .back-btn {
@@ -41,24 +44,26 @@
       color: #000;
       transform: translateY(-2px);
     }
-    .container {
-      padding: 100px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: calc(120px + env(safe-area-inset-top)) 20px 80px;
     }
     h1 {
-      font-size: 2em;
-      margin-bottom: 1.2em;
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
     }
     table {
-      margin: 0 auto 2em;
+      margin: 0 auto 2rem;
       border-collapse: collapse;
-      width: 90%;
+      width: 100%;
       max-width: 400px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     }
     th, td {
-      border: 1px solid #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 0.75em;
       font-size: 1em;
     }
@@ -70,11 +75,27 @@
       font-size: 0.95em;
       color: #ccc;
     }
+
+    p {
+      margin-bottom: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      main {
+        padding: calc(100px + env(safe-area-inset-top)) 15px 60px;
+      }
+      table {
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 <body>
   <a href="index.html" class="back-btn">Home</a>
-  <div class="container">
+  <main>
     <h1>Size Guide</h1>
     <table>
       <tr>
@@ -102,6 +123,6 @@
       <p><strong>Chest:</strong> Measure around the fullest part of your chest, keeping the tape horizontal.</p>
       <p><strong>Length:</strong> Measure from the highest point of the shoulder to the bottom hem.</p>
     </div>
-  </div>
+  </main>
 </body>
 </html>

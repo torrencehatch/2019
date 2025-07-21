@@ -10,20 +10,17 @@
             src: url('fonts/helvetica-now-bold.woff2') format('woff2');
             font-display: swap;
         }
+
         html, body {
             margin: 0;
             padding: 0;
             background: #000;
             color: #fff;
             font-family: 'HelveticaNowBold', sans-serif;
-            height: 100%;
-        }
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             line-height: 1.6;
-            padding: 0 20px;
+        }
+
+        body {
             text-align: center;
         }
         .back-btn {
@@ -50,42 +47,40 @@
             color: #000;
             transform: translateY(-2px);
         }
-        .container {
-            max-width: 700px;
-            width: 100%;
-            padding: 100px 20px;
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: calc(120px + env(safe-area-inset-top)) 20px 80px;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
         }
 
         p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
-        @media screen and (max-height: 600px) {
-            body {
-                align-items: flex-start;
-                padding-top: 40px;
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
             }
-        }
 
-        @media screen and (max-width: 600px) {
-            body {
-                align-items: flex-start;
-                padding-top: 40px;
+            main {
+                padding: calc(100px + env(safe-area-inset-top)) 15px 60px;
             }
-            .container {
-                padding-top: 140px;
+
+            p {
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
 <body>
     <a href="index.html" class="back-btn">Home</a>
-    <div class="container">
+    <main>
         <h1>Returns</h1>
         <p>We want you to love your purchase. If you're not satisfied, here's how we can help:</p>
         <p>Returns accepted within 14 days of delivery</p>
@@ -94,6 +89,6 @@
         <p>Final sale and custom items cannot be returned</p>
         <p>To start a return, text us at +1 (510) 621-3204 with your order number</p>
         <p>Once we receive and inspect your return, we'll issue a refund to your original payment method within 5-7 business days.</p>
-    </div>
+    </main>
 </body>
 </html>
