@@ -554,6 +554,9 @@
 
             if (existingItem) {
                 existingItem.quantity += 1;
+                existingItem.name = product.name;
+                existingItem.price = product.price;
+                existingItem.image = product.image;
             } else {
                 cart.push({
                     id: itemId,
